@@ -1,4 +1,6 @@
+import Temp from "@/components/temp";
 import { connectToDatabase } from "@/lib/database";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 
 export default async function Home() {
@@ -7,8 +9,13 @@ export default async function Home() {
 
   return (
     <div>
-      <h1>Home</h1>
-      <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+      <Temp />
     </div>
   );
 }
