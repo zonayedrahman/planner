@@ -1,7 +1,7 @@
 'use server';
 
 import { connectToDatabase } from "..";
-import TempModel from "../models/temp.models";
+import TempModel from "../models/temp.model";
 
 
 type CreateTempParams = {
