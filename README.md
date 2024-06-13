@@ -1,4 +1,4 @@
-
+Simple planner app that allows users to assign other users as helpers.
 ```bash
 npm run dev
 # or
