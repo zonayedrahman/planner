@@ -16,3 +16,45 @@ export async function createUser(user: CreateUserParams) {
         return error;
     }
 }
+
+export async function getUserById(userId: string) {
+    try {
+        await connectToDatabase();
+
+        const user = await User.findById(userId);
+        return JSON.parse(JSON.stringify(user));
+    }
+    catch (error) {
+        return error;
+    }
+}
+
+export async function getUserByClerkId(clerkId: string) {
+    try {
+        await connectToDatabase();
+
+        const user = await User.findOne({ clerkId: clerkId });
+        return JSON.parse(JSON.stringify(user));
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getUserBySearchQuery(searchQuery: string) {
+    try {
+        await connectToDatabase();
+
+        const users = await User.find({
+            $or: [
+                { name: { $regex: searchQuery, $options: 'i' } },
+                { username: { $regex: searchQuery, $options: 'i' } },
+                { email: { $regex: searchQuery, $options: 'i' } }
+            ]
+        });
+
+        return JSON.parse(JSON.stringify(users));
+    }
+    catch (error) {
+        return error;
+    }
+}

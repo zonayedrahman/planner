@@ -2,12 +2,15 @@ import Dashboard from "@/components/dashboard";
 import Temp from "@/components/temp";
 import { Button } from "@/components/ui/button";
 import { connectToDatabase } from "@/lib/database";
+import { getUserByClerkId } from "@/lib/database/actions/user.actions";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import Image from "next/image";
+import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 
 export default async function Home() {
 
+  const current_clerk_user = await currentUser();
+  const current_user = await getUserByClerkId(current_clerk_user!.id);
   await connectToDatabase();
 
   return (
@@ -33,7 +36,7 @@ export default async function Home() {
         </SignedOut>
 
         <SignedIn>
-          <Dashboard />
+          <Dashboard current_user_id={current_user?._id} />
         </SignedIn>
         {/* <Temp /> */}
       </div>
